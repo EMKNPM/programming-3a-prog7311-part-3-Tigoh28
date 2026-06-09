@@ -1,0 +1,45 @@
+services:
+  sql-server-db:
+    image: ://microsoft.com
+    container_name: sql-server-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Secure_Password123!
+    ports:
+      - "1433:1433"
+    networks:
+      - glms-network
+
+  glms-backend-api:
+    build:
+      context: .
+      dockerfile: ./GLMS.API/Dockerfile
+    container_name: glms-backend-api
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sql-server-db;Database=GLMS_CoreDb;User Id=sa;Password=Secure_Password123!;Encrypt=False;
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5001:80"
+    depends_on:
+      - sql-server-db
+    networks:
+      - glms-network
+
+  glms-frontend-web:
+    build:
+      context: .
+      dockerfile: ./GLMS.Client/Dockerfile
+    container_name: glms-frontend-web
+    environment:
+      - BackendApiUrl=http://glms-backend-api/
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8080:80"
+    depends_on:
+      - glms-backend-api
+    networks:
+      - glms-network
+
+networks:
+  glms-network:
+    driver: bridge

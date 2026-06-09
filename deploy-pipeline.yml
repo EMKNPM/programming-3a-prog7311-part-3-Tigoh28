@@ -1,0 +1,50 @@
+name: GLMS Enterprise DevOps CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  compile-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      sql-server-db:
+        image: ://microsoft.com
+        env:
+          ACCEPT_EULA: "Y"
+          MSSQL_SA_PASSWORD: "Secure_Password123!"
+        ports:
+          - 1433:1433
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET 8 SDK Environment
+      uses: actions/github-actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore Dependencies
+      run: dotnet restore GLMS_Solution.sln
+
+    - name: Compile Solution Code Layers
+      run: dotnet build GLMS_Solution.sln --no-restore -c Release
+
+    - name: Execute Automated Integration Testing Suite
+      run: dotnet test GLMS.Tests/GLMS.Tests.csproj --no-build -c Release
+
+  docker-containerization-matrix:
+    runs-on: ubuntu-latest
+    needs: compile-and-test
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Validate Container Orchestration and Docker Compose Networking Frameworks
+      run: |
+        docker compose build --no-cache
+        docker compose up -d
+        docker ps

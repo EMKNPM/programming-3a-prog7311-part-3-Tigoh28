@@ -1,0 +1,57 @@
+name: dockercompose16858041227254770062
+services:
+  glms-backend-api:
+    build:
+      context: C:\Users\majol\source\repos\GLMS_Solution
+      dockerfile: GLMS.API/Dockerfile
+    container_name: glms-backend-api
+    depends_on:
+      sql-server-db:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Server=sql-server-db;Database=GLMS_CoreDb;User Id=sa;Password=Secure_Password123!;Encrypt=False;
+    networks:
+      glms-network: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "5001"
+        protocol: tcp
+  glms-frontend-web:
+    build:
+      context: C:\Users\majol\source\repos\GLMS_Solution
+      dockerfile: GLMS.Client/Dockerfile
+    container_name: glms-frontend-web
+    depends_on:
+      glms-backend-api:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      BackendApiUrl: http://glms-backend-api/
+    networks:
+      glms-network: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "8080"
+        protocol: tcp
+  sql-server-db:
+    container_name: sql-server-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: Secure_Password123!
+    image: ://microsoft.com
+    networks:
+      glms-network: null
+    ports:
+      - mode: ingress
+        target: 1433
+        published: "1433"
+        protocol: tcp
+networks:
+  glms-network:
+    name: dockercompose16858041227254770062_glms-network
+    driver: bridge

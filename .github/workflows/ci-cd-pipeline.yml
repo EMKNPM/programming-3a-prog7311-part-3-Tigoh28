@@ -23,19 +23,21 @@ jobs:
     - name: Checkout Source Code Repository
       uses: actions/checkout@v4
 
+    # Enforces the Node24 platform target directly to clear all pipeline layout warnings
     - name: Configure .NET 8 SDK Environment
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
 
+    # Auto-locates whatever your solution file name is spelled like to prevent path rejection bugs
     - name: Restore NuGet Application Packages
-      run: dotnet restore GLMS_Solution.sln
+      run: dotnet restore *.sln
 
-    - name: Build System Compilation Layers
-      run: dotnet build GLMS_Solution.sln --no-restore -c Release
+    - name: Compile Solution Code Layers
+      run: dotnet build *.sln -c Release
 
     - name: Run Automated API Integration Tests
-      run: dotnet test GLMS.Tests/GLMS.Tests.csproj --no-build -c Release
+      run: dotnet test *.Tests/*.csproj -c Release --no-build
 
     - name: Orchestrate Ecosystem with Clean Docker Compose Execution
       run: |

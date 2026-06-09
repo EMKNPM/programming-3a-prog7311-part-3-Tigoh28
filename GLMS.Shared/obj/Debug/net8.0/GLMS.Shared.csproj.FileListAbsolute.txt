@@ -1,0 +1,11 @@
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\bin\Debug\net8.0\GLMS.Shared.deps.json
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\bin\Debug\net8.0\GLMS.Shared.dll
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\bin\Debug\net8.0\GLMS.Shared.pdb
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\obj\Debug\net8.0\GLMS.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\obj\Debug\net8.0\GLMS.Shared.AssemblyInfoInputs.cache
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\obj\Debug\net8.0\GLMS.Shared.AssemblyInfo.cs
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\obj\Debug\net8.0\GLMS.Shared.csproj.CoreCompileInputs.cache
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\obj\Debug\net8.0\GLMS.Shared.dll
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\obj\Debug\net8.0\refint\GLMS.Shared.dll
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\obj\Debug\net8.0\GLMS.Shared.pdb
+C:\Users\majol\source\repos\GLMS_Solution\GLMS.Shared\obj\Debug\net8.0\ref\GLMS.Shared.dll

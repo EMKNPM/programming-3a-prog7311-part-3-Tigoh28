@@ -1,0 +1,17 @@
+﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+WORKDIR /app
+
+COPY GLMS.API/*.csproj ./GLMS.API/
+COPY GLMS.Shared/*.csproj ./GLMS.Shared/
+RUN dotnet restore ./GLMS.API/GLMS.API.csproj
+
+COPY . ./
+RUN dotnet publish ./GLMS.API/GLMS.API.csproj -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build-env /app/out .
+
+ENV ASPNETCORE_URLS=http://+:80
+EXPOSE 80
+ENTRYPOINT ["dotnet", "GLMS.API.dll"]
